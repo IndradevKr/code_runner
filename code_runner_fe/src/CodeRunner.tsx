@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './codeRunner.css'
 import { Header } from './sections/header';
 import { MainContent } from './sections/main';
+import { useWebSocket } from './hooks/useWebSocket';
 
 const CodeRunner = () =>  {
   const [language, setLanguage] = useState('python');
   const [theme, setTheme] = useState('Github Light');
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
+
+  const {response, sendMessage, ready} = useWebSocket("wss://compiler.skillshikshya.com/ws/compiler/");
 
   const handleThemeChange = (themeColor: string) => {
     setTheme(themeColor);
@@ -26,11 +29,19 @@ const CodeRunner = () =>  {
   }
 
   const handleStop = () => {
-    console.log("stop clicked.")
+    sendMessage(
+      {
+        "command": "stop"
+      }
+    )
   }
 
   const handleRun = () => {
-    console.log("run clicked");
+    sendMessage({
+      command: "run",
+      code: code,
+      language: language,
+    });
   }
 
   const headerProps = {
@@ -48,8 +59,18 @@ const CodeRunner = () =>  {
     code,
     handleCodeInput,
     output,
-    handleCodeClear
+    handleCodeClear,
+    ready
   }
+
+  useEffect(() => {
+    if(response) {
+      setOutput(response.data ?? '');
+    }
+    return () => {
+      setOutput('');
+    }
+  }, [response])
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
