@@ -6,7 +6,7 @@ import { useWebSocket } from './hooks/useWebSocket';
 
 const CodeRunner = () =>  {
   const [language, setLanguage] = useState('python');
-  const [theme, setTheme] = useState('Github Light');
+  const [theme, setTheme] = useState('Github Dark');
   const [code, setCode] = useState('');
   const [output, setOutput] = useState('');
 
@@ -60,7 +60,8 @@ const CodeRunner = () =>  {
     handleCodeInput,
     output,
     handleCodeClear,
-    ready
+    ready,
+    theme
   }
 
   useEffect(() => {

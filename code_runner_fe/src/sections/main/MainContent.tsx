@@ -10,15 +10,16 @@ interface IMainContentProps {
   output: string;
   handleCodeClear: VoidFunction;
   ready: boolean;
+  theme: string;
 }
 
-export const MainContent = ({language, handleLanguageChange, code, handleCodeInput, output, handleCodeClear, ready }:IMainContentProps) => {
+export const MainContent = ({language, handleLanguageChange, code, handleCodeInput, output, handleCodeClear, ready, theme }:IMainContentProps) => {
   return (
     <div className="flex h-[calc(100vh-4rem)]">
       <SideBar language={language} handleLanguageChange={handleLanguageChange} />
       <div className="flex-1 flex">
-      <CodeEditor code={code} handleCodeInput={handleCodeInput} ready={ready} />
-      <CodeOutput output={output} handleClear={handleCodeClear}/>
+      <CodeEditor code={code} handleCodeInput={handleCodeInput} ready={ready} theme={theme} />
+      <CodeOutput output={output} handleClear={handleCodeClear} theme={theme} />
       </div>
     </div>
   )

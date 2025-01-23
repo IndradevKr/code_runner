@@ -1,9 +1,10 @@
 interface ICodeOutputProps {
   handleClear: VoidFunction;
   output: string;
+  theme: string;
 }
 
-export const CodeOutput = ({output, handleClear}: ICodeOutputProps) => {
+export const CodeOutput = ({output, handleClear, theme}: ICodeOutputProps) => {
   return (
     <div className="flex-1">
       <div className="flex items-center justify-between px-4 py-2 border-b border-gray-700">
@@ -15,7 +16,7 @@ export const CodeOutput = ({output, handleClear}: ICodeOutputProps) => {
         CLEAR
         </button>
       </div>
-      <div className="p-4 h-[calc(100%-3rem)] overflow-auto">
+      <div className={`${theme === "Github Light" ? "bg-white text-gray-700" : "bg-gray-900 text-gray-400"} p-4 h-[calc(100%-3rem)] overflow-auto`}>
         {output}
       </div>
     </div>
